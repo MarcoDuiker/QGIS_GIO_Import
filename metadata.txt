@@ -1,0 +1,47 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=GIO gml import plugin
+qgisMinimumVersion=3.0
+description=Imports Omgevingswet GIO gml's in QGIS
+version=0.1
+author=Marco Duiker - LandGoed
+email=marco.duiker@landgoed.it
+
+about=This plugin imports Omgevingswet GIO gml files into QGIS. For each GIO this has to be done only once. After the import the file is readable for QGIS.
+
+tracker=https://github.com/MarcoDuiker/QGIS_GIO_Import
+repository=https://github.com/MarcoDuiker/QGIS_GIO_Import
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=Omgevingswet, GIO, import
+
+homepage=https://github.com/MarcoDuiker/QGIS_GIO_Import
+category=Vector
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=
+
+Category of the plugin: Raster, Vector, Database or Web
+# category=
+
+# If the plugin can run on QGIS Server.
+server=False
+
