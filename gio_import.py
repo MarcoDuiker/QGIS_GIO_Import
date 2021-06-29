@@ -256,28 +256,43 @@ class GIOimport:
                 progressMessageBar.setText(self.tr(u"Analyzing file ") + str(count) + self.tr(u" from ") 
                     + str(number_of_files) + ": " + os.path.basename(file_name))
 
+                style_file = None
                 with open(file_name, 'rb', 0) as file, \
                     mmap.mmap(file.fileno(), 0, access=mmap.ACCESS_READ) as s:
                     if s.find(b'surfaceMember') != -1:
+                        gfs_type = 'Surface'
+                    elif s.find(b'Surface') != -1:
                         gfs_type = 'Surface'
                     elif s.find(b'curveMember') != -1:
                         gfs_type = 'Curve'
                     else:
                         gfs_type = 'Point'
+                    if s.find(b'FeatureTypeStyle') == -1:
+                        style_file = 'default'
                 shutil.copy(os.path.join(self.plugin_dir,'resources','gfs', 'gio-gml-%s.gfs' % gfs_type),
                             '%s.gfs' % file_name[:-4])
       
                 progressMessageBar.setText(self.tr(u"Adding file ") + str(count) + self.tr(u" from ")
                      + str(number_of_files) + ": " + os.path.basename(file_name))
 
+                vlayer = None
                 try:
-                    self.iface.addVectorLayer(file_name,os.path.basename(file_name)[:-4],'ogr')
+                    vlayer = self.iface.addVectorLayer(file_name,os.path.basename(file_name)[:-4],'ogr')
                 except:
                     self.iface.messageBar().pushMessage(
                         "Error",
                         "%s: %s" %(self.tr(u'Failed to import'), os.path.basename(file_name)), 
                         level = Qgis.Warning) 
                     QApplication.restoreOverrideCursor()
+
+                if vlayer and style_file:
+                    sld_file = os.path.join(self.plugin_dir,'resources','sld','%s.sld' % style_file)
+                    result = vlayer.loadSldStyle(sld_file)
+                    if result: 
+                        QgsMessageLog.logMessage(u'Error loading style: ' + str(result), 'GIOImport')
+
+                    # we kunnen ook sld uit een string toepassen door eerst de featuretypestyle in te lezen uit de GIO
+                    # https://gis.stackexchange.com/questions/223912/read-sld-style-in-pyqgis
 
             # finish the user communication
             QApplication.restoreOverrideCursor()

@@ -6,7 +6,7 @@
 name=GIO gml import plugin
 qgisMinimumVersion=3.0
 description=Imports Omgevingswet GIO gml's in QGIS
-version=0.1
+version=0.3
 author=Marco Duiker - LandGoed
 email=marco.duiker@landgoed.it
 
@@ -20,7 +20,8 @@ repository=https://github.com/MarcoDuiker/QGIS_GIO_Import
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog="0.2: added default GIO styling;
+0.3: fixed import surface as line in some gml"
 
 # Tags are comma separated with spaces allowed
 tags=Omgevingswet, GIO, import
