@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Select GIO-gml files to import</string>
+      <string>Select GIO xml and/ or gml files to import</string>
      </property>
     </widget>
    </item>

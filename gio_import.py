@@ -23,10 +23,14 @@
 """
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, QUrl
 from qgis.PyQt.QtGui import QIcon, QDesktopServices
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QApplication, \
-                                QMessageBox
-from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsApplication, QgsVectorLayer, \
-                      QgsLayerDefinition, QgsLayerTreeLayer, QgsMapLayerProxyModel
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, \
+                                QApplication, QMessageBox
+from qgis.core import Qgis, QgsMessageLog, QgsProject, QgsApplication, \
+                      QgsVectorLayer, QgsLayerDefinition, QgsLayerTreeLayer, \
+                      QgsMapLayerProxyModel
+
+import lxml
+from lxml import etree
 
 import mmap
 import shutil
@@ -37,6 +41,29 @@ from .resources import *
 # Import the code for the dialog
 from .gio_import_dialog import GIOimportDialog
 import os.path
+
+
+NAMED_LAYER_WRAPPER = '''
+<NamedLayer>
+    <se:Name>%s</se:Name>
+    <UserStyle>
+      <se:Name>%s</se:Name>
+      %s
+    </UserStyle>
+</NamedLayer>
+'''
+
+SLD_FILE_WRAPPER = '''<?xml version="1.0" encoding="UTF-8"?>
+<StyledLayerDescriptor  xmlns="http://www.opengis.net/sld" 
+                        xsi:schemaLocation="http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/StyledLayerDescriptor.xsd" 
+                        xmlns:xlink="http://www.w3.org/1999/xlink" 
+                        xmlns:se="http://www.opengis.net/se" 
+                        xmlns:ogc="http://www.opengis.net/ogc" 
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        version="1.1.0" >
+%s
+</StyledLayerDescriptor>
+''' % NAMED_LAYER_WRAPPER
 
 
 class GIOimport:
@@ -191,9 +218,10 @@ class GIOimport:
     def chooseFile(self):
         """Reacts on browse button and opens the right file selector dialog"""
 
-        fileNames = QFileDialog.getOpenFileNames(caption = self.tr(u"Select GIO gml file(s)"), 
-                                                 directory = '', 
-                                                 filter = '*.gml')
+        fileNames = QFileDialog.getOpenFileNames(
+             caption = self.tr(u"Select GIO .gml and/ or .xml file(s)"), 
+             directory = '', 
+             filter = '*.gml *.xml')
         self.fileNames = ';'.join(fileNames[0])
         self.dlg.fileNameBox.setText(self.fileNames)
 
@@ -210,7 +238,8 @@ class GIOimport:
         """Run method that performs all the real work"""
 
         # Create the dialog with elements (after translation) and keep reference
-        # Only create GUI ONCE in callback, so that it will only load when the plugin is started
+        # Only create GUI ONCE in callback, so that it will only load when 
+        # the plugin is started
         if self.first_start == True:
             self.first_start = False
             self.dlg = GIOimportDialog()
@@ -233,16 +262,17 @@ class GIOimport:
                     raise Exception()
             except:
                 self.iface.messageBar().pushMessage("Error",
-                    self.tr(u'Select at least one file to import.'), level = Qgis.Critical)    
+                    self.tr(u'Select at least one file to import.'), 
+                            level = Qgis.Critical)    
                 return
 
             # set up some user communication
             QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
 
             self.iface.messageBar().pushMessage("Info",
-                self.tr(u'Start') + ' ' + self.tr(u'Importing GIO gml files ...'))
+                self.tr(u'Start') + ' ' + self.tr(u'Importing GIO files ...'))
             progressMessageBar = self.iface.messageBar().createMessage( \
-                self.tr(u'Importing GIO gml files ...'))
+                self.tr(u'Importing GIO files ...'))
             bar = QProgressBar()
             bar.setRange(0,0)
             bar.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
@@ -253,8 +283,29 @@ class GIOimport:
             self.results = {}
             for file_name in file_names_list:
                 count = count + 1
-                progressMessageBar.setText(self.tr(u"Analyzing file ") + str(count) + self.tr(u" from ") 
-                    + str(number_of_files) + ": " + os.path.basename(file_name))
+                sld = None
+                if file_name[-4:] == '.xml':
+                    try:
+                        doc  = etree.parse(file_name)
+                        file_base_name = doc.xpath(
+                                ".//*[local-name() = 'bestandsnaam']")[0].text
+                        file_name = os.path.join(os.path.dirname(file_name), 
+                                                 file_base_name)
+                    except:
+                        self.iface.messageBar().pushMessage(
+                            "Error",
+                            "%s: %s" % (self.tr(u'Could not find gml file name in'), 
+                                        os.path.basename(file_name)), 
+                            level = Qgis.Warning)
+                        continue
+                    sld = doc.xpath(".//*[local-name() = 'FeatureTypeStyle']")
+                    if sld:
+                        # we support only 1 style
+                        sld = sld[0]
+
+                progressMessageBar.setText(self.tr(u"Analyzing file ") + \
+                    str(count) + self.tr(u" from ") + str(number_of_files) + \
+                    ": " + os.path.basename(file_name))
 
                 style_file = None
                 with open(file_name, 'rb', 0) as file, \
@@ -267,37 +318,63 @@ class GIOimport:
                         gfs_type = 'Curve'
                     else:
                         gfs_type = 'Point'
-                    if s.find(b'FeatureTypeStyle') == -1:
-                        style_file = 'default'
-                shutil.copy(os.path.join(self.plugin_dir,'resources','gfs', 'gio-gml-%s.gfs' % gfs_type),
+                    
+                shutil.copy(os.path.join(
+                                self.plugin_dir,
+                                'resources','gfs', 'gio-gml-%s.gfs' % gfs_type),
                             '%s.gfs' % file_name[:-4])
       
-                progressMessageBar.setText(self.tr(u"Adding file ") + str(count) + self.tr(u" from ")
-                     + str(number_of_files) + ": " + os.path.basename(file_name))
+                progressMessageBar.setText(
+                    self.tr(u"Adding file ") + str(count) + self.tr(u" from ") + \
+                    str(number_of_files) + ": " + os.path.basename(file_name))
 
                 vlayer = None
                 try:
-                    vlayer = self.iface.addVectorLayer(file_name,os.path.basename(file_name)[:-4],'ogr')
+                    vlayer = self.iface.addVectorLayer(
+                            file_name,os.path.basename(file_name)[:-4],'ogr')
                 except:
                     self.iface.messageBar().pushMessage(
                         "Error",
-                        "%s: %s" %(self.tr(u'Failed to import'), os.path.basename(file_name)), 
+                        "%s: %s" %(self.tr(u'Failed to import'),
+                                        os.path.basename(file_name)), 
                         level = Qgis.Warning) 
+                    QgsMessageLog.logMessage(self.tr(u'Failed to import') + \
+                                str(os.path.basename(file_name)), 'GIOImport')
                     QApplication.restoreOverrideCursor()
 
-                if vlayer and style_file:
-                    sld_file = os.path.join(self.plugin_dir,'resources','sld','%s.sld' % style_file)
-                    result = vlayer.loadSldStyle(sld_file)
-                    if result: 
-                        QgsMessageLog.logMessage(u'Error loading style: ' + str(result), 'GIOImport')
+                if vlayer:
+                    if sld:
+                        # we kunnen sld uit een string toepassen door eerst 
+                        # de featuretypestyle in te lezen uit de GIO
+                        # https://gis.stackexchange.com/questions/223912/read-sld-style-in-pyqgis
+                        # lukt niet, dus nu maar de SLD wegsaven
+                        sld_file = file_name[:-4] + '.sld'  
+                        sld_string = SLD_FILE_WRAPPER % (os.path.basename(file_name),
+                                                         os.path.basename(file_name),
+                                                         etree.tostring(sld).decode("utf-8"))
+                        try:
+                            with open(sld_file,'w') as f:
+                                f.write(sld_string)
+                        except Exception as v:
+                            self.iface.messageBar().pushMessage(
+                                "Error",
+                                "%s: %s" %(self.tr(u'Failed to write style file %s'),
+                                                os.path.basename(sld_file)), 
+                                level = Qgis.Warning)
+                    else:
+                        sld_file = os.path.join(
+                                        self.plugin_dir,
+                                        'resources','sld','%s.sld' % 'default')
+                    error, succes = vlayer.loadSldStyle(sld_file)
+                    if error: 
+                        QgsMessageLog.logMessage(self.tr(u'Error loading style: ') + \
+                                                 str(result), 'GIOImport')
 
-                    # we kunnen ook sld uit een string toepassen door eerst de featuretypestyle in te lezen uit de GIO
-                    # https://gis.stackexchange.com/questions/223912/read-sld-style-in-pyqgis
 
             # finish the user communication
             QApplication.restoreOverrideCursor()
 
-            progressMessageBar.setText(self.tr(u"Importing GIO gml files done!"))
+            progressMessageBar.setText(self.tr(u"Importing GIO files done!"))
             bar.setRange(0,100)
             bar.setValue(100)
 

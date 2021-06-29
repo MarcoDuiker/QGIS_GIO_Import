@@ -1,0 +1,271 @@
+<?xml version="1.0" ?>
+<!-- created by OpenOmgevingswet -->
+<!-- hash and metadata are not correct as this file is for testing symbolization info only -->
+<AanleveringInformatieObject schemaversie="1.0.4" xmlns="https://standaarden.overheid.nl/lvbb/stop/aanlevering/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://standaarden.overheid.nl/lvbb/stop/aanlevering/ ../lvbb/lvbb-stop-aanlevering.xsd">
+  <InformatieObjectVersie>
+    <ExpressionIdentificatie xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+      <FRBRWork>/join/id/regdata/gm0014/2021/maximumBouwhoogte</FRBRWork>
+      <FRBRExpression>/join/id/regdata/gm0014/2021/maximumBouwhoogte/nld@2021-04-07;1</FRBRExpression>
+      <soortWork>/join/id/stop/work_010</soortWork>
+    </ExpressionIdentificatie>
+    <InformatieObjectVersieMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+      <heeftBestanden>
+        <heeftBestand>
+          <Bestand>
+            <bestandsnaam>IJburg_bouwhoogtes.gml</bestandsnaam>
+            <hash>083906c4d872d3a4be5dcc79a5468eea5de88b18a78b497df465b9808cada5e7c33b0649eb7886f8537aaa2ebb073fffa939d5ded9c280f29a90e26ba1eab027</hash>
+          </Bestand>
+        </heeftBestand>
+      </heeftBestanden>
+      <heeftGeboorteregeling>/akn/nl/act/gm0014/2021/OOWTDOP1</heeftGeboorteregeling>
+    </InformatieObjectVersieMetadata>
+    <InformatieObjectMetadata xmlns="https://standaarden.overheid.nl/stop/imop/data/">
+      <eindverantwoordelijke>/tooi/id/gemeente/gm0014</eindverantwoordelijke>
+      <maker>/tooi/id/gemeente/gm0014</maker>
+      <officieleTitel>/join/id/regdata/gm0014/2021/maximumBouwhoogte</officieleTitel>
+      <naamInformatieObject>maximum bouwhoogte</naamInformatieObject>
+      <publicatieinstructie>TeConsolideren</publicatieinstructie>
+      <formaatInformatieobject>/join/id/stop/informatieobject/gio_002</formaatInformatieobject>
+    </InformatieObjectMetadata>
+    <se:FeatureTypeStyle version="1.1.0" xmlns="http://www.opengis.net/se"
+       xmlns:geo="https://standaarden.overheid.nl/stop/imop/geo/" xmlns:ogc="http://www.opengis.net/ogc"
+       xmlns:se="http://www.opengis.net/se" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.opengis.net/se
+       https://standaarden.overheid.nl/stop/1.0.4/se-FeatureStyle-imop.xsd">
+       <se:FeatureTypeName>geo:Locatie</se:FeatureTypeName>
+       <se:SemanticTypeIdentifier>geo:kwantitatieveNormwaarde</se:SemanticTypeIdentifier>
+       <se:Rule>
+          <se:Name>Bouwhoogte kleiner dan 5 meter</se:Name>
+          <se:Description>
+             <se:Title>lager dan 5 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte kleiner dan 5 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:PropertyIsLessThan>
+                <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                <ogc:Literal>5</ogc:Literal>
+             </ogc:PropertyIsLessThan>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt307</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#d2d2ff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+       <se:Rule>
+          <se:Name>Bouwhoogte 5 tot 10 meter</se:Name>
+          <se:Description>
+             <se:Title>5 tot 10 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte 5 meter of hoger, maar kleiner dan 10 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:And>
+                <ogc:PropertyIsGreaterThanOrEqualTo>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>5</ogc:Literal>
+                </ogc:PropertyIsGreaterThanOrEqualTo>
+                <ogc:PropertyIsLessThan>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>10</ogc:Literal>
+                </ogc:PropertyIsLessThan>
+             </ogc:And>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt306</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#b4b4ff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+       <se:Rule>
+          <se:Name>Bouwhoogte 10 tot 15 meter</se:Name>
+          <se:Description>
+             <se:Title>10 tot 15 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte 10 meter of hoger, maar kleiner dan 15 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:And>
+                <ogc:PropertyIsGreaterThanOrEqualTo>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>10</ogc:Literal>
+                </ogc:PropertyIsGreaterThanOrEqualTo>
+                <ogc:PropertyIsLessThan>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>15</ogc:Literal>
+                </ogc:PropertyIsLessThan>
+             </ogc:And>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt305</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#9696ff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+       <se:Rule>
+          <se:Name>Bouwhoogte 15 tot 20 meter</se:Name>
+          <se:Description>
+             <se:Title>15 tot 20 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte 15 meter of hoger, maar kleiner dan 20 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:And>
+                <ogc:PropertyIsGreaterThanOrEqualTo>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>15</ogc:Literal>
+                </ogc:PropertyIsGreaterThanOrEqualTo>
+                <ogc:PropertyIsLessThan>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>20</ogc:Literal>
+                </ogc:PropertyIsLessThan>
+             </ogc:And>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt304</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#7878ff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+       <se:Rule>
+          <se:Name>Bouwhoogte 20 tot 25 meter</se:Name>
+          <se:Description>
+             <se:Title>20 tot 25 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte 20 meter of hoger, maar kleiner dan 25 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:And>
+                <ogc:PropertyIsGreaterThanOrEqualTo>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>20</ogc:Literal>
+                </ogc:PropertyIsGreaterThanOrEqualTo>
+                <ogc:PropertyIsLessThan>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>25</ogc:Literal>
+                </ogc:PropertyIsLessThan>
+             </ogc:And>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt303</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#5a5aff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+       <se:Rule>
+          <se:Name>Bouwhoogte 25 tot 30 meter</se:Name>
+          <se:Description>
+             <se:Title>25 tot 30 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte 25 meter of hoger, maar kleiner dan 30 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:And>
+                <ogc:PropertyIsGreaterThanOrEqualTo>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>25</ogc:Literal>
+                </ogc:PropertyIsGreaterThanOrEqualTo>
+                <ogc:PropertyIsLessThan>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>30</ogc:Literal>
+                </ogc:PropertyIsLessThan>
+             </ogc:And>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt302</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#3c3cff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+       <se:Rule>
+          <se:Name>Bouwhoogte 30 tot 35 meter</se:Name>
+          <se:Description>
+             <se:Title>30 tot 35 meter</se:Title>
+             <!-- Tekst voor legenda -->
+             <se:Abstract>Maximum bouwhoogte 30 meter of hoger, maar kleiner dan 35 meter</se:Abstract>
+             <!-- toelichting op legenda tekst -->
+          </se:Description>
+          <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
+             <ogc:And>
+                <ogc:PropertyIsGreaterThanOrEqualTo>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>30</ogc:Literal>
+                </ogc:PropertyIsGreaterThanOrEqualTo>
+                <ogc:PropertyIsLessThan>
+                   <ogc:PropertyName>kwantitatieveNormwaarde</ogc:PropertyName>
+                   <ogc:Literal>35</ogc:Literal>
+                </ogc:PropertyIsLessThan>
+             </ogc:And>
+          </ogc:Filter>
+          <se:PolygonSymbolizer>
+             <se:Name>vsgt301</se:Name>
+             <se:Fill>
+                <se:SvgParameter name="fill">#1e1eff</se:SvgParameter>
+                <se:SvgParameter name="fill-opacity">0.3</se:SvgParameter>
+             </se:Fill>
+             <se:Stroke>
+                <se:SvgParameter name="stroke">#0000ff</se:SvgParameter>
+                <se:SvgParameter name="stroke-opacity">1</se:SvgParameter>
+                <se:SvgParameter name="stroke-width">0.5</se:SvgParameter>
+                <se:SvgParameter name="stroke-linejoin">round</se:SvgParameter>
+             </se:Stroke>
+          </se:PolygonSymbolizer>
+       </se:Rule>
+    </se:FeatureTypeStyle>
+  </InformatieObjectVersie>
+</AanleveringInformatieObject>

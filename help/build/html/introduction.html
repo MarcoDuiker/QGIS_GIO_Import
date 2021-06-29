@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Introduction &#8212; GIOimport 0.1 documentation</title>
+    <title>Introduction &#8212; GIOimport 0.9 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to GIO gml import plugin documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">GIOimport 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">GIOimport 0.9 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -49,18 +49,27 @@
 <div class="section" id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
 <p>This plug-in is developed by Marco Duiker from <a class="reference external" href="http://www.landgoed.it/">LandGoed</a> .</p>
-<p>The plug-in provides a way to directly import Omgevingswet GIO gml files into QGIS.</p>
+<p>The plug-in provides a way to directly import Omgevingswet GIO xml and gml files into QGIS.</p>
 </div>
 <div class="section" id="how-does-the-plug-in-work">
 <h2>How does the plug-in work?<a class="headerlink" href="#how-does-the-plug-in-work" title="Permalink to this headline">¶</a></h2>
 <p>You will find the plugin in the Vector menu. A menu bar with a button is added to the QGIS interface as well. If you cannot find it, you can activate it in the same manner as all other menu bars.</p>
 <div class="section" id="import-files">
 <h3>Import files<a class="headerlink" href="#import-files" title="Permalink to this headline">¶</a></h3>
-<p>The plugin does nothing more than placing a .gfs file with the same name as the GIO gml file adjacent to the GIO gml file.
+<p>This plugin will import:</p>
+<blockquote>
+<div><ul class="simple">
+<li>.gml files which are part of a STOP-GIO</li>
+<li>.xml files which together with the GIO .gml file is a STOP-GIO</li>
+</ul>
+</div></blockquote>
+<p>More information on STOP-GIO’s can be found <a class="reference external" href="https://koop.gitlab.io/STOP/standaard/1.0.4/GIOConceptueel.html">here</a> .</p>
+<p>The plugin will place a .gfs file with the same name as the GIO .gml file adjacent to the GIO .gml file.
 This .gfs file contains all information QGIS (or ogr/ gdal if you prefer working from the command line) needs to correctly read the GIO gml file.</p>
-<p>Importing a GIO gml file needs to be done only once. After the first import, QGIS will read the GIO gml file properly without use of the import plugin.
-It does not hurt if you use the plugin to import a GIO gml file more than once.</p>
-<p>So, all you need to do is select one or more GIO gml files, and press the OK button.</p>
+<p>Furthermore, if styling information is provided in the GIO, it will be extracted and saved to a .sld adjacent to the GIO .gml file (with the same base name as the GIO .gml file). The styling is applied to the layer as well.
+If no styling information is provided in the GIO, or on import of a GIO .gml file, the default styling as used by the <a class="reference external" href="https://iplo.nl/digitaal-stelsel/introductie/landelijke-voorziening/lvbb/">LVBB</a> is used.</p>
+<p>Importing a GIO gml file needs to be done only once. After the first import, QGIS will read the GIO gml file properly without use of the import plugin. You’ll have to apply the styling in the .sld via the symbology properties of the layer.
+It does not hurt if you use the plugin to import a GIO xml or gml file more than once.</p>
 <p><strong>This plugin works for Omgevingswet GIO gml files only. It will not help to import any other type of gml file.</strong></p>
 </div>
 </div>
@@ -117,7 +126,7 @@ It does not hurt if you use the plugin to import a GIO gml file more than once.<
         <li class="right" >
           <a href="index.html" title="Welcome to GIO gml import plugin documentation!"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">GIOimport 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">GIOimport 0.9 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
