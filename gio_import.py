@@ -86,7 +86,7 @@ class GIOimport:
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'GIOimport_{}.qm'.format(locale))
+            '{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()

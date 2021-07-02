@@ -5,12 +5,12 @@
 [general]
 name=GIO gml import plugin
 qgisMinimumVersion=3.0
-description=Imports Omgevingswet GIO gml's in QGIS
-version=0.9
+description=Imports Omgevingswet GIO xml and/ or gml files in QGIS
+version=0.9.1
 author=Marco Duiker - LandGoed
 email=marco.duiker@landgoed.it
 
-about=This plugin imports Omgevingswet GIO gml files into QGIS. For each GIO this has to be done only once. After the import the file is readable for QGIS.
+about=This plugin imports Omgevingswet GIO xml and /or gml files into QGIS. If style information is available in the GIO this style will be applied as well. Otherwise the default LVBB style will be used.
 
 tracker=https://github.com/MarcoDuiker/QGIS_GIO_Import
 repository=https://github.com/MarcoDuiker/QGIS_GIO_Import
@@ -22,10 +22,11 @@ hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
 changelog="0.2: added default GIO styling;
 0.3: fixed import surface as line in some gml;
-0.9: import gio_xml as well and support for styling"
+0.9: import gio_xml as well and support for styling;
+0.9.1: fixed translation and updated descriptions in metadada."
 
 # Tags are comma separated with spaces allowed
-tags=Omgevingswet, GIO, import
+tags=Omgevingswet, GIO, import, gml, xml
 
 homepage=https://github.com/MarcoDuiker/QGIS_GIO_Import
 category=Vector
@@ -42,7 +43,7 @@ deprecated=False
 # plugin_dependencies=
 
 Category of the plugin: Raster, Vector, Database or Web
-# category=
+#category=Vector
 
 # If the plugin can run on QGIS Server.
 server=False
